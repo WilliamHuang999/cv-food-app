@@ -18,8 +18,19 @@ print(len(categories))      # Should be 131
 def prepareImage(path):
     img = load_img(img, target_size=(100,100))
     imgArray = img_to_array(img)
-    print(imgArray.shape)
+    # print(imgArray.shape)
     imgArray = np.expand_dims(imgArray, axis=0)
     imgArray = imgArray / 255.
     return imgArray
+
+testImgPath = "======================="
+imageForModel = prepareImage(testImgPath)
+
+resultArray = model.predict(testImgPath, verbose=1)
+answers = np.argmax(resultArray, axis=1)
+print(categories[answers[0]])
+
+# Show image with text below
+
+
 

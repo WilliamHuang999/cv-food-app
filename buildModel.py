@@ -9,18 +9,18 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import EarlyStopping
 import matplotlib.pyplot as plt
 
-trainPath = r"C:\Users\gener\OneDrive\Documents\cv-food-app\archive\fruits-360\Training"
-testPath = r"C:"
+trainPath = r"C:\Users\gener\OneDrive\Documents\cv-food-app\archive\fruits-360\Train"
+testPath = r"C:\Users\gener\OneDrive\Documents\cv-food-app\archive\fruits-360\Test"
 
 batchSize = 64      # Reduce value if you have less GPU
 
 # Read in example image and get shape
-img = load_img(trainPath + r"\Quince\0_100.jpg")
-plt.imshow(img)
-plt.show()
+# img = load_img(trainPath + r"\Quince\0_100.jpg")
+# plt.imshow(img)
+# plt.show()
 
-imgA = img_to_array(img)
-print(imgA.shape)
+# imgA = img_to_array(img)
+# print(imgA.shape)
 
 # Build model
 model = Sequential()
@@ -58,6 +58,6 @@ stop_early = EarlyStopping(monitor="val_accuracy", patience=5)      # Stop fitti
 
 history = model.fit(train_generator, steps_per_epoch=stepsPerEpoch, epochs=50, validation_data=test_generator, validation_steps=validationSteps, callbacks=[stop_early])
 
-model.save("=================")     # Add file path hear to save the model to
+model.save("=================")     # Add file path to save the model to
 
 
