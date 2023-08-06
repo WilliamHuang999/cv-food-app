@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/awesome-project/.pnp
+/awesome-project/.pnp.js
+/awesome-project/node_modules
+
+
+# testing
+/awesome-project/coverage
+
+# production
+/awesome-project/build
+
+# misc
+/awesome-project/.DS_Store
+/awesome-project/.env.local
+/awesome-project/.env.development.local
+/awesome-project/.env.test.local
+/awesome-project/.env.production.local
+
+/aweseome-project/npm-debug.log*
+/awesome-project/yarn-debug.log*
+/awesome-project/yarn-error.log*
