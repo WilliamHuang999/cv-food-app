@@ -63,7 +63,7 @@ video{
 button {
   position: absolute;
   bottom: 200px;
-  left: 200px;
+  left: 1000px;
 
   appearance: none;
   border: none;

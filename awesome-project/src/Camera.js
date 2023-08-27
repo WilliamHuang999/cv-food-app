@@ -1,10 +1,13 @@
 import React, {useRef, useEffect, useState} from "react";
+import * as tf from "@tensorflow/tfjs";
+import { loadgraphModel } from '@tensorflow/tfjs-converter';
 
 function Camera() {
   const videoRef = useRef(null);
   const photoRef = useRef(null);
   
   const [hasPhoto, setHasPhoto] = useState(false);
+
 
   const getVideo = () => {
     navigator.mediaDevices
@@ -19,7 +22,8 @@ function Camera() {
     })
   }
 
-  const takePhoto = () => {
+
+  const takePhoto = async (model) => {
 {/*      const width = 414;
       const height = width / (16/9);
   */}
@@ -31,11 +35,13 @@ function Camera() {
       photo.width = width;
       photo.height = height;
 
+
       let ctx = photo.getContext('2d');
       
       ctx.drawImage(video, 0,0,width,height);
       setHasPhoto(true);
   }
+
 
   const closePhoto = () => {
     let photo = photoRef.current;
