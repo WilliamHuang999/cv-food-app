@@ -22,10 +22,11 @@ function Upload(){
 
         const getClassLabels = async () => {
             const res = await fetch(
-                "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
+                {/*"https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"*/}
+
             );
 
-            const data = await res.json();
+            const data = await labels.json.json();
             console.log(data);
             setClassLabels(data);
         };
@@ -70,7 +71,7 @@ function Upload(){
             const [predictedClass, confidence] = tf.tidy(() => {
                 const tensorImg = tf.browser.fromPixels(image).resizeNearestNeighbor([224, 224]).toFloat().expandDims();
                 const result = model.predict(tensorImg);
-                
+
 
                 const predictions = result.dataSync();
                 const predicted_index = result.as1D().argMax().dataSync()[0];
