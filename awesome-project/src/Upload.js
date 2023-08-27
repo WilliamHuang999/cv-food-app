@@ -22,11 +22,11 @@ function Upload(){
 
         const getClassLabels = async () => {
             const res = await fetch(
-                {/*"https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"*/}
+                "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
 
             );
 
-            const data = await labels.json.json();
+            const data = await res.json();
             console.log(data);
             setClassLabels(data);
         };
