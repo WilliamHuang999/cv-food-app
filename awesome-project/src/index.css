@@ -60,7 +60,7 @@ video{
   transform: scaleX(-1);
 }
 
-button {
+/* button {
   position: absolute;
   bottom: 200px;
   left: 1000px;
@@ -78,8 +78,7 @@ button {
   font-weight: 700;
   transition: 0.4s;
   cursor: pointer;
-
-}
+} */
 
 button:hover{
   background-position: 100%;

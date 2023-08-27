@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Nutrition from "./Nutrition";
 
 function Home() {
     const navigate = useNavigate();

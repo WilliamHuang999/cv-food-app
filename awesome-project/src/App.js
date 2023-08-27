@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Camera from './Camera';
 import Upload from './Upload';
+import Nutrition from "./Nutrition";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/camera" element={<Camera />} />
       <Route path="/upload" element={<Upload />} />
+      <Route path="/nutrition/" element={<Nutrition food="cheddar cheese"/>} />
     </Routes>
     </>
 
