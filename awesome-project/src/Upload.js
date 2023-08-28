@@ -5,34 +5,37 @@ import {Backdrop, Chip, CircularProgress, Grid, Stack } from "@mui/material";
 
 
 function Upload(){
+    {/*Set up component states*/}
     const [model, setModel] = useState(null);
     const [classLabels, setClassLabels] = useState(null);
     const [loading, setLoading] = useState(false);
     const [confidence, setConfidence] = useState(null);
     const [predictedClass, setPredictedClass] = useState(null);
 
+    {/*Load the model and fetch the labels*/}
     useEffect(() => {
         const loadModel = async () => {
             const model_url = "test/model.json";
 
             const model = await tf.loadGraphModel(model_url);
             setModel(model);
-            console.log("Model loaded");
+            console.log("Upload model loaded");
         };
 
         const getClassLabels = async () => {
             const res = await fetch(
-                {/*"https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"*/}
-
+                "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
+                
             );
 
-            const data = await labels.json.json();
-            console.log(data);
+            const data = await res.json();
             setClassLabels(data);
         };
         loadModel();
         getClassLabels();
     }, []);
+
+
 
     const readImageFile = (file) => {
         return new Promise((resolve) => {
@@ -73,12 +76,20 @@ function Upload(){
                 const result = model.predict(tensorImg);
 
 
-                const predictions = result.dataSync();
-                const predicted_index = result.as1D().argMax().dataSync()[0];
+                const predictions = Array.from(result.dataSync());
+                const {values, indices} = tf.topk(predictions, 5);
+                const top5Values = Array.from(values.dataSync());
+                const top5Indices = Array.from(indices.dataSync());
 
-                const predictedClass = classLabels[predicted_index];
-                const confidence = Math.round(predictions[predicted_index] * 100);
-                console.log(predictedClass);
+
+                const predictedClass = [];
+                for (let i = 0; i < 5; i++){
+                  predictedClass[i] = classLabels[top5Indices[i]];
+                }
+                const confidence = [];
+                for (let i = 0; i < 5; i++){
+                  confidence[i] = Math.round(top5Values[i] * 100);
+                };
 
                 return [predictedClass, confidence];
             });
@@ -102,14 +113,30 @@ function Upload(){
                     filesLimit={1}
                     showAlerts={["error"]}
                 />
-                      <Stack style={{ marginTop: "2em", width: "20rem" }} direction="row" spacing={1}>
+                {/*Lists the top 5 guesses. Only guesses with nonzero confidence are displayed*/}
+                      <Stack style={{ marginTop: "2em", width: "20rem" }} direction="column" spacing={1}>
                     <Chip
-                        label={predictedClass === null ? "Prediction:" : 'Prediction: ' +predictedClass}
+                        label={confidence === null ? "1." : '1. ' +predictedClass[0] + ' (' + confidence[0]+'%)'}
                         style={{ justifyContent: "left" }}
                      variant="outlined"
                      />
                     <Chip
-                        label={confidence === null ? "Confidence:" : 'Confidence: '+confidence}
+                        label={confidence === null || confidence[1] === 0 ? "2." : '2. '+predictedClass[1] + ' (' + confidence[1]+'%)'}
+                        style={{ justifyContent: "left" }}
+                     variant="outlined"
+                     />
+                    <Chip
+                        label={confidence === null || confidence[2] === 0 ? "3." : '3. '+predictedClass[2] + ' (' + confidence[2]+'%)'}
+                        style={{ justifyContent: "left" }}
+                     variant="outlined"
+                     />
+                    <Chip
+                        label={confidence === null || confidence[3] === 0 ? "4." : '4. '+predictedClass[3] + ' (' + confidence[3]+'%)'}
+                        style={{ justifyContent: "left" }}
+                     variant="outlined"
+                     />
+                    <Chip
+                        label={confidence === null || confidence[4] === 0? "5." : '5. '+predictedClass[4] + ' (' + confidence[4]+'%)'}
                         style={{ justifyContent: "left" }}
                      variant="outlined"
                      />
